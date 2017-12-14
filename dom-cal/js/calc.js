@@ -2,7 +2,10 @@
 
 	Tasks: 
 		- Return Number to the Screen
-		- Enable Functionality 
+		- Enable Functionality to operators
+		- Enable functionality to Equals
+		- Show sum on screen 
+		- Enable clear functionality 
 		
 
 		Example: 
@@ -32,11 +35,15 @@ var screen = document.getElementById("screen");
 var sum = document.getElementsByClassName("operator");
 var numButton = document.getElementsByClassName("buttonNum");
 var equals = document.getElementsByClassName("equals");
+var finNum = document.getElementById("finNum");
+var clear = document.getElementById("clear");
 var curNum = "";
 var prevNum = "";
 var result;
 var operator;
 
+
+// get the numbers and set them to screen
  var getNum = function() {
   	if(result){
   		curNum = this.getAttribute("num");
@@ -48,6 +55,8 @@ var operator;
  	screen.innerHTML = curNum;
  }
 
+
+// get the operator functions
  var numOperator = function() {
  	prevNum = curNum;
  	curNum = "";
@@ -56,6 +65,7 @@ var operator;
 
  }
 
+ // convert numbers and get the result
  var getResult = function() {
  	prevNum = parseFloat(prevNum);
  	curNum = parseFloat(curNum);
@@ -79,15 +89,25 @@ var operator;
  	}
  }
 
+ // get the numbers and show reuslt on screen
  var showResult = function() {
  	getResult();
  	screen.innerHTML = result;
- 	equals.setAttribute("result", result);
+ 	finNum.setAttribute("result", result);
 
  	prevNum = 0;
  	curNum = result;
  }
 
+ // Set the numbers to default when cleared
+ var clearNumbers = function() {
+ 		prevNum = ""; 
+ 		curNum = "";
+ 		screen.innerHTML = "0";
+ 		finNum.setAttribute("result", result);
+ }
+
+// When a number is click show on screen
 function clickNumber(){
 	for(var i = 0, list = numButton.length; i < list; i++){
 		numButton[i].onclick = getNum;
@@ -95,6 +115,7 @@ function clickNumber(){
 	}
 }
 
+// When and operator is clicked perform that operator 
 function clickOperator() {
 	for(var i = 0, list = sum.length; i < list; i++){
 		sum[i].onclick = numOperator;
@@ -102,12 +123,19 @@ function clickOperator() {
 	}
 }
 
+// When equals is clciked show the result of equation
 function clickEquals() {
-	equals.onclick = showResult;
+	finNum.onclick = showResult;
 }
 
+// When AC button is clicked clear all numbers using clearNumbers function
+function clickClear() {
+	clear.onclick = clearNumbers;
+}
+
+// Call all the click functions to be performed on screen
 clickNumber();
 clickOperator();
 clickEquals();
-
+clickClear();
 
